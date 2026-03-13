@@ -1,0 +1,76 @@
+# High Leverage Scalper Bot Configuration
+# Binance Futures 50x Isolated
+
+# Risk Management
+risk_management:
+  max_leverage: 50
+  max_risk_per_trade: 2.0  # % of portfolio
+  max_sl_distance: 0.003   # 0.3% max
+  max_positions: 2
+  margin_type: "ISOLATED"
+
+# Trading Parameters
+trading:
+  scan_interval: 60        # seconds
+  min_confidence: 0.65
+  priority_symbols:
+    - "SOLUSDT"
+    - "ETHUSDT"
+    - "BTCUSDT"
+  timeframes:
+    primary: "M15"
+    confirmation: "M5"
+    trend: "H1"
+
+# Entry/Exit Rules
+entry:
+  order_type: "LIMIT"      # Never market order
+  time_in_force: "GTC"
+  max_entry_range: 0.001   # 0.1% - tight entry zone
+
+exit:
+  tp_levels: [1.5, 2.5, 3.5]  # R:R ratios
+  partial_close: true
+  close_before_funding: true
+  funding_buffer_minutes: 5
+
+# Scalping Levels (Schelling Points)
+schelling_levels:
+  BTC:
+    - 1000
+    - 500
+    - 100
+    - 50
+  ETH:
+    - 50
+    - 25
+    - 10
+    - 5
+  SOL:
+    - 5
+    - 2
+    - 1
+    - 0.5
+
+# Filters
+filters:
+  min_volume_ratio: 0.8    # Current vs avg volume
+  min_wick_ratio: 2.0      # Wick vs body
+  rsi_range: [30, 70]      # Don't trade extreme RSI
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/scalper.log"
+  max_size: "10MB"
+  backup_count: 5
+
+# Notifications (optional)
+notifications:
+  telegram:
+    enabled: false
+    bot_token: ""
+    chat_id: ""
+  discord:
+    enabled: false
+    webhook_url: ""
